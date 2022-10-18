@@ -65,6 +65,29 @@ let selectionQuestionTimeoutCounter = 6000;
 let closeResponutCounter = 5000;
 let timeout;
 
+function checkAllergie(val) {
+  let finalAnswer = false;
+  let dataset = val.answer;
+  if (
+    dataset.options === "Banana" ||
+    dataset.options === "Olive" ||
+    dataset.options === "Sunflowers"
+  ) {
+    finalAnswer = true;
+    terminateTheQuiz();
+  }
+}
+
+function terminateTheQuiz() {
+  fetch(url_preset + "/").then((res) =>
+    res.json({
+      p: "You have an allergy to one of the main ingredients in our system. Our Current system will not suit you ",
+      h: "Quiz will be now terminated",
+      count: "10",
+    })
+  );
+}
+
 const mainImage = $(".main-image-container img");
 fetch(url_preset + "/configurations")
   .then((res) => res.json())
@@ -1329,7 +1352,7 @@ async function askQuestion(totalQuizQuestions, counter, fromBack) {
             <button data-val="${val.answer}" data-id="${
           val.id
         }" class="selectionBtns selectionBtn" ${(onclick =
-          checkAllergie())}  >${val.answer}</button>
+          checkAllergie(val))}  >${val.answer}</button>
           </div>
         `);
       }
