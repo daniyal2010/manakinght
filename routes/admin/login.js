@@ -9,14 +9,18 @@ const errors = require("../../core/errors");
 const app = require("express").Router();
 const role_id = 1;
 
-app.get("/admin/login", SessionService.preventAuthRoutes(role_id, "admin"), async function (req, res, next) {
-  const AuthViewModel = require("../../view_models/admin_auth_view_model");
+app.get(
+  "/admin/login",
+  SessionService.preventAuthRoutes(role_id, "admin"),
+  async function (req, res, next) {
+    const AuthViewModel = require("../../view_models/admin_auth_view_model");
 
-  const viewModel = new AuthViewModel(db.user, "Login");
-  req.session.redirect_to = req.query.redirect_to;
+    const viewModel = new AuthViewModel(db.user, "Login");
+    req.session.redirect_to = req.query.redirect_to;
 
-  return res.render("admin/Login", viewModel);
-});
+    return res.render("admin/Login", viewModel);
+  }
+);
 
 app.post(
   "/admin/login",
@@ -42,10 +46,21 @@ app.post(
 
     const viewModel = new AuthViewModel(db.user, "Login");
 
-    ValidationService.handleValidationErrorForViews(req, res, viewModel, "admin/Login", "login_fields", { email });
+    ValidationService.handleValidationErrorForViews(
+      req,
+      res,
+      viewModel,
+      "admin/Login",
+      "login_fields",
+      { email }
+    );
 
     try {
-      const { credential, user } = await AuthService.login(email, password, role_id);
+      const { credential, user } = await AuthService.login(
+        email,
+        password,
+        role_id
+      );
 
       const session = req.session;
 

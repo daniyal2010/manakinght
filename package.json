@@ -4,6 +4,7 @@
   "description": "",
   "main": "lambda.js",
   "scripts": {
+    "start": "node server.js",
     "deploy": "claudia create --region us-east-2 --handler lambda.handler",
     "update": "claudia update"
   },
