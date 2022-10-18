@@ -162,16 +162,20 @@ function showQuizTitle() {
       <h4>Part ${allItems[currentQuizIndex].id}: ${allItems[currentQuizIndex].name}</h4>
       <h1>${allItems[currentQuizIndex].description}</h1>
     `);
-  setTimeout(function () {
-    $("#page1").css("display", "none");
-    $("#page2").css("display", "none");
-    $("#page3").css("display", "block");
-    $("#page4").css("display", "none");
-    $("#page5").css("display", "none");
-    $("#page6").css("display", "none");
-    $("#page7").css("display", "none");
-    $("#progressBarSection").css("display", "block");
-  }, nextQuestionTimeoutCounter);
+  setTimeout(
+    function () {
+      $("#page1").css("display", "none");
+      $("#page2").css("display", "none");
+      $("#page3").css("display", "block");
+      $("#page4").css("display", "none");
+      $("#page5").css("display", "none");
+      $("#page6").css("display", "none");
+      $("#page7").css("display", "none");
+      $("#progressBarSection").css("display", "block");
+    },
+    nextQuestionTimeoutCounter,
+    nextQuestion()
+  );
 }
 
 function showPreparingPage() {
@@ -833,9 +837,9 @@ async function nextQuestion(goBack, goBackFromResponse, fromDependedOn) {
             );
             responseOnGoing = true;
             hasNoResponse = false;
-            // closeResponut = setTimeout(async () => {
-            //   closeResponse();
-            // }, closeResponutCounter);
+            closeResponut = setTimeout(async () => {
+              closeResponse();
+            }, closeResponutCounter);
           }
         } else if (apiQues.answers && apiQues.answers[0].responseBody) {
           $("#page3").css("display", "none");

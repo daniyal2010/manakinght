@@ -213,6 +213,7 @@ input[type="number"] {
   border-left: 1px solid black;
   width: 90%;
   display: center;
+
   object-fit: cover;
 }
 
